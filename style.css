@@ -1,48 +1,126 @@
+@keyframes fundoAnimado {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   text-align: center;
-  background: radial-gradient(circle, #1a1a1a, #000);
   color: white;
+
+  background: linear-gradient(-45deg, #0f0f0f, #1a0033, #001a33, #33001a);
+  background-size: 400% 400%;
+  animation: fundoAnimado 10s ease infinite;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.card {
-  background: #000;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px gold;
-}
-
+/* TÍTULO NEON */
 h1 {
-  color: gold;
-  text-shadow: 0 0 10px gold;
+  font-size: 45px;
+  color: #fff;
+
+  text-shadow:
+    0 0 5px #0ff,
+    0 0 10px #0ff,
+    0 0 20px #0ff,
+    0 0 40px #0ff;
+
+  animation: piscar 2s infinite alternate;
 }
 
-input, button {
+@keyframes piscar {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+/* CAIXA MENU */
+.card {
+  background: rgba(0,0,0,0.7);
+  padding: 30px;
+  border-radius: 15px;
+
+  box-shadow:
+    0 0 10px #0ff,
+    0 0 20px #0ff;
+}
+
+/* INPUT */
+input {
   padding: 10px;
   margin: 10px;
-  font-size: 16px;
-}
-
-button {
-  background: gold;
+  border-radius: 8px;
   border: none;
-  cursor: pointer;
+  outline: none;
+
+  background: black;
+  color: #0ff;
+
+  box-shadow: 0 0 10px #0ff inset;
 }
 
+/* BOTÃO NEON */
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  background: black;
+  color: #0ff;
+
+  box-shadow:
+    0 0 5px #0ff,
+    0 0 15px #0ff;
+
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+
+  box-shadow:
+    0 0 10px #0ff,
+    0 0 25px #0ff,
+    0 0 40px #0ff;
+}
+
+/* SLOTS NEON */
 .slot {
   display: inline-block;
-  font-size: 60px;
+  font-size: 70px;
   margin: 15px;
   padding: 20px;
-  border: 3px solid gold;
-  border-radius: 10px;
-  box-shadow: 0 0 15px gold;
+  border-radius: 15px;
+
+  background: black;
+
+  box-shadow:
+    0 0 10px #ff00ff,
+    0 0 20px #ff00ff,
+    0 0 40px #ff00ff;
+
+  animation: brilho 1.5s infinite alternate;
+}
+
+@keyframes brilho {
+  from {
+    box-shadow:
+      0 0 10px #ff00ff,
+      0 0 20px #ff00ff;
+  }
+  to {
+    box-shadow:
+      0 0 20px #00ffff,
+      0 0 40px #00ffff;
+  }
+}
+
+/* TEXTO */
+#mensagem {
+  font-size: 20px;
+  margin-top: 20px;
+
+  text-shadow: 0 0 10px #fff;
 }
