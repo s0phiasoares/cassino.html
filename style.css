@@ -8,40 +8,37 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   color: white;
+  margin: 0;
 
   background: linear-gradient(-45deg, #0f0f0f, #1a0033, #001a33, #33001a);
   background-size: 400% 400%;
   animation: fundoAnimado 10s ease infinite;
 }
 
-/* TÍTULO NEON */
+/* CENTRALIZAR MENU */
+body.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* TÍTULO */
 h1 {
   font-size: 45px;
-  color: #fff;
-
-  text-shadow:
-    0 0 5px #0ff,
-    0 0 10px #0ff,
-    0 0 20px #0ff,
-    0 0 40px #0ff;
-
-  animation: piscar 2s infinite alternate;
+  text-shadow: 0 0 20px #0ff;
 }
 
-@keyframes piscar {
-  from { opacity: 0.8; }
-  to { opacity: 1; }
-}
-
-/* CAIXA MENU */
+/* CARD */
 .card {
   background: rgba(0,0,0,0.7);
   padding: 30px;
   border-radius: 15px;
-
-  box-shadow:
-    0 0 10px #0ff,
-    0 0 20px #0ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px #0ff;
 }
 
 /* INPUT */
@@ -50,77 +47,60 @@ input {
   margin: 10px;
   border-radius: 8px;
   border: none;
-  outline: none;
-
   background: black;
   color: #0ff;
-
-  box-shadow: 0 0 10px #0ff inset;
 }
 
-/* BOTÃO NEON */
+/* BOTÃO */
 button {
   padding: 12px 25px;
   margin: 10px;
-  font-size: 16px;
-  border: none;
   border-radius: 10px;
+  border: none;
   cursor: pointer;
-
   background: black;
   color: #0ff;
-
-  box-shadow:
-    0 0 5px #0ff,
-    0 0 15px #0ff;
-
-  transition: 0.2s;
+  box-shadow: 0 0 10px #0ff;
 }
 
 button:hover {
   transform: scale(1.1);
-
-  box-shadow:
-    0 0 10px #0ff,
-    0 0 25px #0ff,
-    0 0 40px #0ff;
 }
 
-/* SLOTS NEON */
+/* SLOTS */
 .slot {
   display: inline-block;
   font-size: 70px;
   margin: 15px;
   padding: 20px;
   border-radius: 15px;
-
   background: black;
-
-  box-shadow:
-    0 0 10px #ff00ff,
-    0 0 20px #ff00ff,
-    0 0 40px #ff00ff;
-
-  animation: brilho 1.5s infinite alternate;
-}
-
-@keyframes brilho {
-  from {
-    box-shadow:
-      0 0 10px #ff00ff,
-      0 0 20px #ff00ff;
-  }
-  to {
-    box-shadow:
-      0 0 20px #00ffff,
-      0 0 40px #00ffff;
-  }
+  box-shadow: 0 0 20px #ff00ff;
 }
 
 /* TEXTO */
 #mensagem {
   font-size: 20px;
   margin-top: 20px;
+}
 
-  text-shadow: 0 0 10px #fff;
+/* EFEITOS */
+.efeitos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.item {
+  position: absolute;
+  font-size: 30px;
+  animation: cair linear forwards;
+}
+
+@keyframes cair {
+  0% { transform: translateY(-50px); }
+  100% { transform: translateY(100vh); opacity: 0; }
 }
