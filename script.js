@@ -1,71 +1,93 @@
-let saldo = Number(prompt("Digite seu saldo inicial:"));
-
-const saldoEl = document.getElementById("saldo");
-const resultadoEl = document.getElementById("resultado");
-const mensagemEl = document.getElementById("mensagem");
-const btn = document.getElementById("btnGirar");
-
-saldoEl.innerText = saldo.toFixed(2);
-
 const simbolos = ["🍒", "⭐", "🔔", "7️⃣", "🍋", "🍉"];
 
-btn.addEventListener("click", () => {
+let saldo = Number(localStorage.getItem("saldo")) || 0;
+let nome = localStorage.getItem("nome") || "Jogador";
+
+document.getElementById("saldo").innerText = saldo.toFixed(2);
+document.getElementById("nome").innerText = nome;
+
+const r1 = document.getElementById("r1");
+const r2 = document.getElementById("r2");
+const r3 = document.getElementById("r3");
+
+const btn = document.getElementById("btnGirar");
+const msg = document.getElementById("mensagem");
+
+const somGiro = document.getElementById("somGiro");
+const somWin = document.getElementById("somWin");
+
+btn.onclick = () => {
   let aposta = Number(document.getElementById("aposta").value);
 
-  if (aposta <= 0) {
+  if (!aposta || aposta <= 0 || aposta > saldo) {
     alert("Aposta inválida!");
     return;
   }
 
-  if (aposta > saldo) {
-    alert("Saldo insuficiente!");
-    return;
-  }
-
   saldo -= aposta;
+  atualizarSaldo();
 
-  let animacao = 0;
-  let intervalo = setInterval(() => {
-    let temp = [
-      simbolos[Math.floor(Math.random() * simbolos.length)],
-      simbolos[Math.floor(Math.random() * simbolos.length)],
-      simbolos[Math.floor(Math.random() * simbolos.length)]
-    ];
+  somGiro.currentTime = 0;
+  somGiro.play();
 
-    resultadoEl.innerText = temp.join(" | ");
-    animacao++;
+  girarRolo(r1, 10, 80, () => {
+    girarRolo(r2, 15, 80, () => {
+      girarRolo(r3, 20, 80, resultadoFinal);
+    });
+  });
 
-    if (animacao > 10) {
-      clearInterval(intervalo);
+  function resultadoFinal() {
+    let res = [r1.innerText, r2.innerText, r3.innerText];
 
-      let resultado = [
-        simbolos[Math.floor(Math.random() * simbolos.length)],
-        simbolos[Math.floor(Math.random() * simbolos.length)],
-        simbolos[Math.floor(Math.random() * simbolos.length)]
-      ];
+    let texto = "";
 
-      resultadoEl.innerText = resultado.join(" | ");
+    // 🎉 JACKPOT
+    if (res[0] === res[1] && res[1] === res[2]) {
+      let ganho = aposta * 5;
 
-      let mensagem = "";
-
-      if (resultado[0] === resultado[1] && resultado[1] === resultado[2]) {
-        let ganho = aposta * 5;
-        saldo += ganho;
-        mensagem = "🎉 JACKPOT! Você ganhou R$ " + ganho.toFixed(2);
-      } else if (new Set(resultado).size === 2) {
-        let ganho = aposta * 2;
-        saldo += ganho;
-        mensagem = "✨ Dois iguais! Você ganhou R$ " + ganho.toFixed(2);
-      } else {
-        mensagem = "❌ Você perdeu!";
+      // 🪙 bônus especial 🍒
+      if (res[0] === "🍒") {
+        ganho *= 2;
+        texto = "🍒 SUPER BÔNUS!!! ";
       }
 
-      mensagemEl.innerText = mensagem;
-      saldoEl.innerText = saldo.toFixed(2);
+      saldo += ganho;
+      somWin.play();
+      texto += "🎉 JACKPOT! +" + ganho.toFixed(2);
 
-      if (saldo <= 0) {
-        alert("💀 Você ficou sem saldo!");
-      }
+    } else if (new Set(res).size === 2) {
+      let ganho = aposta * 2;
+      saldo += ganho;
+      texto = "✨ Dois iguais! +" + ganho.toFixed(2);
+
+    } else {
+      texto = "❌ Perdeu!";
     }
-  }, 100);
-});
+
+    msg.innerText = texto;
+    atualizarSaldo();
+    salvar();
+  }
+};
+
+function girarRolo(elemento, vezes, tempo, callback) {
+  let i = 0;
+
+  let intervalo = setInterval(() => {
+    elemento.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+    i++;
+
+    if (i >= vezes) {
+      clearInterval(intervalo);
+      if (callback) callback();
+    }
+  }, tempo);
+}
+
+function atualizarSaldo() {
+  document.getElementById("saldo").innerText = saldo.toFixed(2);
+}
+
+function salvar() {
+  localStorage.setItem("saldo", saldo);
+}

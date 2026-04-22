@@ -2,22 +2,35 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>🎰 Cassino</title>
+  <title>🐴 Cassino da Mula</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="menu">
 
-<h1>🎰 Slot Machine</h1>
+<h1>🐴 Cassino da Mula</h1>
 
-<p>💰 Saldo: R$ <span id="saldo">0</span></p>
+<div class="card">
+  <input type="text" id="nome" placeholder="Seu nome">
+  <input type="number" id="saldoInicial" placeholder="Saldo inicial">
+  <button onclick="entrar()">Entrar</button>
+</div>
 
-<input type="number" id="aposta" placeholder="Digite sua aposta">
-<button id="btnGirar">Girar</button>
+<script>
+function entrar() {
+  const nome = document.getElementById("nome").value;
+  const saldo = Number(document.getElementById("saldoInicial").value);
 
-<div class="slot" id="resultado">❔ | ❔ | ❔</div>
+  if (!nome || saldo <= 0) {
+    alert("Preencha tudo corretamente!");
+    return;
+  }
 
-<p id="mensagem"></p>
+  localStorage.setItem("nome", nome);
+  localStorage.setItem("saldo", saldo);
 
-<script src="script.js"></script>
+  window.location.href = "jogo.html";
+}
+</script>
+
 </body>
 </html>
